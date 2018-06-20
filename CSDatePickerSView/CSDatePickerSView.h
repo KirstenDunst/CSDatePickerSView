@@ -1,0 +1,59 @@
+//
+//  CSDatePickerSView.h
+//  CSDatePickerSView
+//
+//  Created by 曹世鑫 on 2018/6/20.
+//  Copyright © 2018年 曹世鑫. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+
+/**
+ *  日期选择器显示模式。
+ */
+typedef NS_ENUM(NSInteger, CSDatePickerViewShowModel) {
+    CSDatePickerViewShowModelDefalut, //显示年，月，日，时，分。
+    CSDatePickerViewShowModelYearMonthDayHour, //显示年，月，日，时。
+    CSDatePickerViewShowModelYearMonthDay, //显示年，月，日。
+    CSDatePickerViewShowModelHourMintueSecond,//显示时，分，秒。
+    CSDatePickerViewShowModelDefalutSecond,//显示年，月，日，时，分，秒。
+};
+
+/**
+ *  日期选择器时间范围。
+ */
+typedef NS_ENUM(NSInteger, CSDatePickerViewDateRangeModel) {
+    CSDatePickerViewDateRangeModelCurrent, //最大时间为当前系统时间。用途：例如选择生日的时候不可能大于当前时间。
+    CSDatePickerViewDateRangeModelCustom //自定义时间范围。可通过下面的属性minYear和maxYear设定。
+};
+
+@protocol CSDatePickerSViewDelegate <NSObject>   //声明一个代理
+
+/**
+ 时间选择器的返回（eg：如果我们选择的CSDatePickerViewShowModel是只有年月日的CSDatePickerViewShowModelYearMonthDay，那么我们返回的date只有年月日时我们选的，至于转换成字符串之后的时分秒是我们创建这个控件的时候的值，换句话说既然你选择显示的是年月日，那么时分秒你就不用取）
+
+ @param datePickerView 时间选择器的对象
+ @param date 返回的日期值，NSDate类型。
+ */
+- (void)datePickerView:(UIPickerView *)datePickerView didSelectDate:(NSDate *)date;
+
+@end
+
+@interface CSDatePickerSView : UIView
+
+@property(strong,nonatomic) id<CSDatePickerSViewDelegate> delegate;
+//显示
+- (void)show;
+//关闭
+- (void)close;
+
+@property (nonatomic, assign) NSInteger minYear; //时间列表最小年份，不能大于最大年份。默认为1970年。
+@property (nonatomic, assign) NSInteger maxYear; //时间列表最大年份，不能小于最小年份。默认为当前年份。注意：仅当属性datePickerViewDateRangeModel的值为CSDatePickerViewDateRangeModelCustom时才有效。
+
+@property (nonatomic, assign, readonly, getter=isVisible) BOOL visible; //YES:处于显示状态，NO:处于隐藏状态。
+
+@property (nonatomic, assign) CSDatePickerViewShowModel datePickerViewShowModel; //日期显示模式，默认为CSDatePickerViewShowModelDefalut。
+
+@property (nonatomic, assign) CSDatePickerViewDateRangeModel  datePickerViewDateRangeModel; //时间范围模式，默认为CSDatePickerViewDateRangeModelCurrent。
+@end
