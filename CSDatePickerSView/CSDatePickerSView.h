@@ -13,19 +13,26 @@
  *  日期选择器显示模式。
  */
 typedef NS_ENUM(NSInteger, CSDatePickerViewShowModel) {
-    CSDatePickerViewShowModelDefalut, //显示年，月，日，时，分。
-    CSDatePickerViewShowModelYearMonthDayHour, //显示年，月，日，时。
-    CSDatePickerViewShowModelYearMonthDay, //显示年，月，日。
-    CSDatePickerViewShowModelHourMintueSecond,//显示时，分，秒。
-    CSDatePickerViewShowModelDefalutSecond,//显示年，月，日，时，分，秒。
+    //显示年，月，日，时，分。
+    CSDatePickerViewShowModelDefalut,
+    //显示年，月，日，时。
+    CSDatePickerViewShowModelYearMonthDayHour,
+    //显示年，月，日。
+    CSDatePickerViewShowModelYearMonthDay,
+    //显示时，分，秒。
+    CSDatePickerViewShowModelHourMintueSecond,
+    //显示年，月，日，时，分，秒。
+    CSDatePickerViewShowModelDefalutSecond,
 };
 
 /**
  *  日期选择器时间范围。
  */
 typedef NS_ENUM(NSInteger, CSDatePickerViewDateRangeModel) {
-    CSDatePickerViewDateRangeModelCurrent, //最大时间为当前系统时间。用途：例如选择生日的时候不可能大于当前时间。
-    CSDatePickerViewDateRangeModelCustom //自定义时间范围。可通过下面的属性minYear和maxYear设定。
+    //最大时间为当前系统时间。用途：例如选择生日的时候不可能大于当前时间。
+    CSDatePickerViewDateRangeModelCurrent,
+    //自定义时间范围。可通过下面的属性minYear和maxYear设定。
+    CSDatePickerViewDateRangeModelCustom,
 };
 
 @protocol CSDatePickerSViewDelegate <NSObject>   //声明一个代理
@@ -46,7 +53,7 @@ typedef NS_ENUM(NSInteger, CSDatePickerViewDateRangeModel) {
 - (void)show;
 //关闭
 - (void)close;
-
+//刷新处理(如果配合切换日期显示模式，建议先刷新然后再设置日期显示模式切换)
 - (void)reloadDataNew;
 
 //日期显示模式，默认为CSDatePickerViewShowModelDefalut。
