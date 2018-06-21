@@ -35,6 +35,7 @@
     
     //总标题数。
     NSInteger totalTitleLabel;
+    UIView *_topView;
 }
 //时间选择view
 @property (nonatomic, strong) UIPickerView *datePickerView;
@@ -43,7 +44,7 @@
 //目前显示的类型的所有选中row的依次集合。
 @property (nonatomic, strong) NSMutableArray *selectRowArr;
 //显示的标题arr
-@property (nonatomic, strong) NSArray *titleArr;
+@property (nonatomic, strong) NSMutableArray *titleArr;
 
 @end
 
@@ -52,9 +53,9 @@
 #define BTNCHOOSEVIEWHEIGHT 44
 #define TITLESHOWHEIGHT 30
 
-- (NSArray *)titleArr{
+- (NSMutableArray *)titleArr{
     if (!_titleArr) {
-        _titleArr = [NSArray array];
+        _titleArr = [NSMutableArray array];
     }
     return _titleArr;
 }
@@ -74,10 +75,9 @@
 }
 - (UIPickerView *)datePickerView{
     if (!_datePickerView) {
-        _datePickerView = [[UIPickerView alloc]init];
+        _datePickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, BTNCHOOSEVIEWHEIGHT+TITLESHOWHEIGHT, self.frame.size.width, self.frame.size.height-(BTNCHOOSEVIEWHEIGHT+TITLESHOWHEIGHT))];
         _datePickerView.backgroundColor = [UIColor whiteColor];
         _datePickerView.showsSelectionIndicator = YES;
-        _datePickerView.frame = CGRectMake(0, BTNCHOOSEVIEWHEIGHT+TITLESHOWHEIGHT, self.frame.size.width, self.frame.size.height-(BTNCHOOSEVIEWHEIGHT+TITLESHOWHEIGHT));
         _datePickerView.delegate = self;
         _datePickerView.dataSource = self;
     }
@@ -87,9 +87,9 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         _minYear = 1970;
-//        _visible = NO;
         _datePickerViewShowModel = CSDatePickerViewShowModelDefalut;
         _datePickerViewDateRangeModel = CSDatePickerViewDateRangeModelCurrent;
+        [self initArrTemp];
         [self __initView];
         [self __initData];
     }
@@ -97,22 +97,31 @@
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
+    self.frame = frame;
     if (self = [super initWithFrame:frame]) {
         _minYear = 1970;
-//        _visible = NO;
         _datePickerViewShowModel = CSDatePickerViewShowModelDefalut;
         _datePickerViewDateRangeModel = CSDatePickerViewDateRangeModelCurrent;
+        [self initArrTemp];
         [self __initView];
         [self __initData];
     }
     return self;
 }
+- (void)initArrTemp{
+    yearArray = [[NSMutableArray alloc]init];
+    monthArray = [[NSMutableArray alloc]init];
+    dayArray = [[NSMutableArray alloc]init];
+    hourArray = [[NSMutableArray alloc]init];
+    minuteArray = [[NSMutableArray alloc]init];
+    secondArray = [[NSMutableArray alloc]init];
+}
 
 - (void)__initView{
     self.backgroundColor = [UIColor whiteColor];
-  
-    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0,0,self.frame.size.width,BTNCHOOSEVIEWHEIGHT)];
-    [self addSubview:topView];
+    
+    _topView = [[UIView alloc]initWithFrame:CGRectMake(0,0,self.frame.size.width,BTNCHOOSEVIEWHEIGHT)];
+    [self addSubview:_topView];
     UIButton *cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(30,8,40, 28)];
     UIButton *confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width - 30 - 40,8,40, 28)];
     [cancelButton setTitle:@"取消"forState:UIControlStateNormal];
@@ -121,8 +130,8 @@
     [confirmButton setTitleColor:[UIColor blueColor]forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancelButtonClicked)forControlEvents:UIControlEventTouchUpInside];
     [confirmButton addTarget:self action:@selector(confirmButtonClicked)forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:cancelButton];
-    [topView addSubview:confirmButton];
+    [_topView addSubview:cancelButton];
+    [_topView addSubview:confirmButton];
 }
 
 - (void)__initData{
@@ -147,47 +156,54 @@
     NSInteger currentSecond = maxSecond;
     
     //初始化年份数组(范围自定义)。
-    yearArray = [[NSMutableArray alloc]init];
     for (NSInteger i = _minYear; i <= currentYear; i ++) {
         [yearArray addObject:[NSString stringWithFormat:@"%ld",(long)i]];
     }
     selectedYearRow = [yearArray indexOfObject:[NSString stringWithFormat:@"%ld",(long)currentYear]];
     
     //初始化月份数组(1-12)。
-    monthArray = [[NSMutableArray alloc]init];
     for (NSInteger i = 1; i <= currentMonth; i++) {
         [monthArray addObject:[NSString stringWithFormat:@"%ld",(long)i]];
     }
     selectedMonthRow = currentMonth - 1;
     
     //初始化天数数组(1-31)。
-    dayArray = [[NSMutableArray alloc]init];
     for (NSInteger i = 1; i <= currentDay; i++) {
         [dayArray addObject:[NSString stringWithFormat:@"%ld",(long)i]];
     }
     selectedDayRow = currentDay - 1;
     
     //初始化小时数组(0-23)。
-    hourArray = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i <= currentHour; i++) {
         [hourArray addObject:[NSString stringWithFormat:@"%ld",(long)i]];
     }
     selectedHourRow = currentHour;
     
     //初始化分钟数组(0-59)。
-    minuteArray = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i <= currentMinute; i++) {
         [minuteArray addObject:[NSString stringWithFormat:@"%ld",(long)i]];
     }
     selectedMinuteRow = currentMinute;
     
     //初始化秒数组(0-59)。
-    secondArray = [[NSMutableArray alloc]init];
     for (NSInteger i = 0; i <= currentSecond; i++) {
         [secondArray addObject:[NSString stringWithFormat:@"%ld",(long)i]];
     }
     selectedSecondRow = currentSecond;
     
+}
+
+- (void)reloadDataNew{
+    [yearArray removeAllObjects];
+    [monthArray removeAllObjects];
+    [dayArray removeAllObjects];
+    [hourArray removeAllObjects];
+    [minuteArray removeAllObjects];
+    [secondArray removeAllObjects];
+    //    [self __initData];
+    [self __initData];
+    [self updateCurrentDateArray];
+    //    [self choseNowTime];
 }
 
 #pragma mark - Setter
@@ -214,7 +230,7 @@
     if (_datePickerViewDateRangeModel == CSDatePickerViewDateRangeModelCurrent) {
         //更新时间最大值为当前系统时间。
         NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSCalendarUnit calendarUnit = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute;
+        NSCalendarUnit calendarUnit = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
         NSDateComponents *currentDateComponents = [calendar components:calendarUnit fromDate:[NSDate date]];
         
         _maxYear = [currentDateComponents year];
@@ -256,14 +272,15 @@
 
 - (void)setDatePickerViewShowModel:(CSDatePickerViewShowModel)datePickerViewShowModel {
     if (_datePickerViewShowModel!=datePickerViewShowModel) {
-      _datePickerViewShowModel = datePickerViewShowModel;
+        _datePickerViewShowModel = datePickerViewShowModel;
     }
+    [self.titleArr removeAllObjects];
     [self.dataArr removeAllObjects];
     [self.selectRowArr removeAllObjects];
     switch (_datePickerViewShowModel) {
         case CSDatePickerViewShowModelDefalut:
         {
-            self.titleArr = @[@"年",@"月",@"日",@"时",@"分"];
+            self.titleArr = @[@"年",@"月",@"日",@"时",@"分"].mutableCopy;
             [self.dataArr addObject:yearArray];
             [self.selectRowArr addObject:[NSNumber numberWithInteger:selectedYearRow]];
             [self.dataArr addObject:monthArray];
@@ -278,7 +295,7 @@
             break;
         case CSDatePickerViewShowModelYearMonthDay:
         {
-            self.titleArr = @[@"年",@"月",@"日"];
+            self.titleArr = @[@"年",@"月",@"日"].mutableCopy;
             [self.dataArr addObject:yearArray];
             [self.selectRowArr addObject:[NSNumber numberWithInteger:selectedYearRow]];
             [self.dataArr addObject:monthArray];
@@ -289,7 +306,7 @@
             break;
         case CSDatePickerViewShowModelYearMonthDayHour:
         {
-            self.titleArr = @[@"年",@"月",@"日",@"时"];
+            self.titleArr = @[@"年",@"月",@"日",@"时"].mutableCopy;
             [self.dataArr addObject:yearArray];
             [self.selectRowArr addObject:[NSNumber numberWithInteger:selectedYearRow]];
             [self.dataArr addObject:monthArray];
@@ -302,7 +319,7 @@
             break;
         case CSDatePickerViewShowModelHourMintueSecond:
         {
-            self.titleArr = @[@"时",@"分",@"秒"];
+            self.titleArr = @[@"时",@"分",@"秒"].mutableCopy;
             [self.dataArr addObject:hourArray];
             [self.selectRowArr addObject:[NSNumber numberWithInteger:selectedHourRow]];
             [self.dataArr addObject:minuteArray];
@@ -313,7 +330,7 @@
             break;
         case CSDatePickerViewShowModelDefalutSecond:
         {
-            self.titleArr = @[@"年",@"月",@"日",@"时",@"分",@"秒"];
+            self.titleArr = @[@"年",@"月",@"日",@"时",@"分",@"秒"].mutableCopy;
             [self.dataArr addObject:yearArray];
             [self.selectRowArr addObject:[NSNumber numberWithInteger:selectedYearRow]];
             [self.dataArr addObject:monthArray];
@@ -329,7 +346,12 @@
         }
             break;
     }
-    
+    for(UIView *view in [self subviews])
+    {
+        if (view != _topView) {
+            [view removeFromSuperview];
+        }
+    }
     [self addSubview:self.datePickerView];
     [self choseNowTime];
     [self resetTitleShow];
@@ -347,7 +369,8 @@
 }
 //刷新时间并转到当前的最新时间
 - (void)choseNowTime{
-//    [self.datePickerView reloadAllComponents];
+    //先刷新一下将数组界面置新，防止转到的时候会先刷新展示的row的值导致数组越界崩溃
+    [self.datePickerView reloadAllComponents];
     for (int i = 0; i< self.selectRowArr.count; i++) {
         //转到当前的时间值（不能超）
         [self.datePickerView selectRow:[self.selectRowArr[i] integerValue] inComponent:i animated:YES];
@@ -372,8 +395,7 @@
     selectedYearRow = selectedYearRow > [yearArray count] - 1 ? [yearArray count] - 1 : selectedYearRow;
 }
 #pragma mark 重置月份
-- (void)resetMonthArrayWithYear:(NSInteger)year
-{
+- (void)resetMonthArrayWithYear:(NSInteger)year{
     NSInteger totalMonth = 12;
     if (_maxYear == year) {
         totalMonth = maxMonth; //限制月份。
@@ -670,7 +692,7 @@
                     break;
                 case 4:
                 {
-                   [self selectWithYearRow:nil monthRow:nil dayRow:nil hourRow:nil mintueRow:row secondRow:nil];
+                    [self selectWithYearRow:nil monthRow:nil dayRow:nil hourRow:nil mintueRow:row secondRow:nil];
                     [self.datePickerView reloadAllComponents];
                 }
                     break;
@@ -723,7 +745,7 @@
     }
     selectedHour = [[hourArray objectAtIndex:selectedHourRow] integerValue]; //获取选择的小时。
     if (rowHour||rowDay||rowMon||rowYear) {
-         [self resetMinuteArrayWithYear:selectedYear month:selectedMonth day:selectedDay hour:selectedHour]; //重置分钟。
+        [self resetMinuteArrayWithYear:selectedYear month:selectedMonth day:selectedDay hour:selectedHour]; //重置分钟。
     }
     
     if (rowMintue) {
@@ -737,7 +759,7 @@
     if (rowSecond) {
         selectedSecondRow = rowSecond;
     }
-   
+    
 }
 
 
@@ -820,6 +842,7 @@
 
 - (void)show{
     [self showDataPickerView:YES withAnimation:AnimationDuration];
+    [self choseNowTime];
 }
 - (void)close{
     [self showDataPickerView:NO withAnimation:AnimationDuration];
@@ -828,7 +851,8 @@
     @synchronized(self){
         if(isShow){
             [UIView animateWithDuration:duration animations:^{
-                [self setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height -self.frame.size.height,self.frame.size.width,self.frame.size.width)];
+                //高度减去状态栏以及导航栏的高度44
+                [self setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - self.frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height-44,self.frame.size.width,self.frame.size.height)];
             }];
         }else {
             [UIView animateWithDuration:duration animations:^{
@@ -838,6 +862,7 @@
         }
     };
 }
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, CSDatePickerViewDateRangeModel) {
 
 /**
  时间选择器的返回（eg：如果我们选择的CSDatePickerViewShowModel是只有年月日的CSDatePickerViewShowModelYearMonthDay，那么我们返回的date只有年月日时我们选的，至于转换成字符串之后的时分秒是我们创建这个控件的时候的值，换句话说既然你选择显示的是年月日，那么时分秒你就不用取）
-
+ 
  @param datePickerView 时间选择器的对象
  @param date 返回的日期值，NSDate类型。
  */
@@ -42,18 +42,23 @@ typedef NS_ENUM(NSInteger, CSDatePickerViewDateRangeModel) {
 
 @interface CSDatePickerSView : UIView
 
-@property(strong,nonatomic) id<CSDatePickerSViewDelegate> delegate;
 //显示
 - (void)show;
 //关闭
 - (void)close;
 
-@property (nonatomic, assign) NSInteger minYear; //时间列表最小年份，不能大于最大年份。默认为1970年。
-@property (nonatomic, assign) NSInteger maxYear; //时间列表最大年份，不能小于最小年份。默认为当前年份。注意：仅当属性datePickerViewDateRangeModel的值为CSDatePickerViewDateRangeModelCustom时才有效。
+- (void)reloadDataNew;
 
-@property (nonatomic, assign, readonly, getter=isVisible) BOOL visible; //YES:处于显示状态，NO:处于隐藏状态。
+//日期显示模式，默认为CSDatePickerViewShowModelDefalut。
+@property (nonatomic, assign) CSDatePickerViewShowModel datePickerViewShowModel;
 
-@property (nonatomic, assign) CSDatePickerViewShowModel datePickerViewShowModel; //日期显示模式，默认为CSDatePickerViewShowModelDefalut。
+//时间范围模式，默认为CSDatePickerViewDateRangeModelCurrent。
+@property (nonatomic, assign) CSDatePickerViewDateRangeModel  datePickerViewDateRangeModel;
 
-@property (nonatomic, assign) CSDatePickerViewDateRangeModel  datePickerViewDateRangeModel; //时间范围模式，默认为CSDatePickerViewDateRangeModelCurrent。
+//时间列表最小年份，不能大于最大年份。默认为1970年。
+@property (nonatomic, assign) NSInteger minYear;
+//时间列表最大年份，不能小于最小年份。默认为当前年份。注意：仅当属性datePickerViewDateRangeModel的值为CSDatePickerViewDateRangeModelCustom时才有效。
+@property (nonatomic, assign) NSInteger maxYear;
+
+@property(strong,nonatomic) id<CSDatePickerSViewDelegate> delegate;
 @end
