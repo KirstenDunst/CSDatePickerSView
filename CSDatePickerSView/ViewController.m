@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "CSDatePickerSView.h"
+#import "SecondViewController.h"
 
 @interface ViewController ()<CSDatePickerSViewDelegate>
 
@@ -26,6 +27,17 @@
     [button addTarget:self action:@selector(buttonChoose:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
+    UIButton *buttonSender = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonSender.frame = CGRectMake(80, 200, 200, 60);
+    [buttonSender setTitle:@"另外一种界面测试" forState:UIControlStateNormal];
+    [buttonSender setTintColor:[UIColor cyanColor]];
+    [buttonSender addTarget:self action:@selector(nextVC:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:buttonSender];
+    
+    
+}
+- (void)nextVC:(UIButton *)sender{
+    [self.navigationController pushViewController:[SecondViewController new] animated:YES];
 }
 - (void)buttonChoose:(UIButton *)sender{
     CSDatePickerSView *pickerView = [[CSDatePickerSView alloc]initWithFrame:CGRectMake(0,self.view.frame.size.height,self.view.frame.size.width,260)];
