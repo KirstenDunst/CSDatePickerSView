@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB20016E21106604006D00D0 /* CSDatePickerSView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB20016D21106604006D00D0 /* CSDatePickerSView.m */; };
 		DBDBE8FD20D9EC350001B176 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDBE8FC20D9EC350001B176 /* AppDelegate.m */; };
 		DBDBE90020D9EC350001B176 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDBE8FF20D9EC350001B176 /* ViewController.m */; };
 		DBDBE90320D9EC350001B176 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBDBE90120D9EC350001B176 /* Main.storyboard */; };
 		DBDBE90520D9EC370001B176 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBDBE90420D9EC370001B176 /* Assets.xcassets */; };
 		DBDBE90820D9EC370001B176 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBDBE90620D9EC370001B176 /* LaunchScreen.storyboard */; };
 		DBDBE90B20D9EC370001B176 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDBE90A20D9EC370001B176 /* main.m */; };
-		DBDBE91320D9EC490001B176 /* CSDatePickerSView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDBE91220D9EC490001B176 /* CSDatePickerSView.m */; };
 		DBDBF82E20DCA6620001B176 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDBF82D20DCA6620001B176 /* SecondViewController.m */; };
 		DBDBF83320DCA6C90001B176 /* FBFiltrateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDBF82F20DCA6C80001B176 /* FBFiltrateModel.m */; };
 		DBDBF83420DCA6C90001B176 /* FBFiltrateView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDBF83220DCA6C90001B176 /* FBFiltrateView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB20016C21106604006D00D0 /* CSDatePickerSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDatePickerSView.h; sourceTree = "<group>"; };
+		DB20016D21106604006D00D0 /* CSDatePickerSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDatePickerSView.m; sourceTree = "<group>"; };
 		DBDBE8F820D9EC350001B176 /* CSDatePickerSView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSDatePickerSView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDBE8FB20D9EC350001B176 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DBDBE8FC20D9EC350001B176 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -30,8 +32,6 @@
 		DBDBE90720D9EC370001B176 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DBDBE90920D9EC370001B176 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBDBE90A20D9EC370001B176 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		DBDBE91120D9EC490001B176 /* CSDatePickerSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDatePickerSView.h; sourceTree = "<group>"; };
-		DBDBE91220D9EC490001B176 /* CSDatePickerSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDatePickerSView.m; sourceTree = "<group>"; };
 		DBDBF82C20DCA6620001B176 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		DBDBF82D20DCA6620001B176 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		DBDBF82F20DCA6C80001B176 /* FBFiltrateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFiltrateModel.m; sourceTree = "<group>"; };
@@ -52,6 +52,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB20016B21106604006D00D0 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				DB20016C21106604006D00D0 /* CSDatePickerSView.h */,
+				DB20016D21106604006D00D0 /* CSDatePickerSView.m */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
 		DBDBE8EF20D9EC350001B176 = {
 			isa = PBXGroup;
 			children = (
@@ -71,12 +80,11 @@
 		DBDBE8FA20D9EC350001B176 /* CSDatePickerSView */ = {
 			isa = PBXGroup;
 			children = (
+				DB20016B21106604006D00D0 /* Code */,
 				DBDBE8FB20D9EC350001B176 /* AppDelegate.h */,
 				DBDBE8FC20D9EC350001B176 /* AppDelegate.m */,
 				DBDBE8FE20D9EC350001B176 /* ViewController.h */,
 				DBDBE8FF20D9EC350001B176 /* ViewController.m */,
-				DBDBE91120D9EC490001B176 /* CSDatePickerSView.h */,
-				DBDBE91220D9EC490001B176 /* CSDatePickerSView.m */,
 				DBDBF82C20DCA6620001B176 /* SecondViewController.h */,
 				DBDBF82D20DCA6620001B176 /* SecondViewController.m */,
 				DBDBF83120DCA6C90001B176 /* FBFiltrateModel.h */,
@@ -165,9 +173,9 @@
 			files = (
 				DBDBF82E20DCA6620001B176 /* SecondViewController.m in Sources */,
 				DBDBE90020D9EC350001B176 /* ViewController.m in Sources */,
+				DB20016E21106604006D00D0 /* CSDatePickerSView.m in Sources */,
 				DBDBE90B20D9EC370001B176 /* main.m in Sources */,
 				DBDBF83420DCA6C90001B176 /* FBFiltrateView.m in Sources */,
-				DBDBE91320D9EC490001B176 /* CSDatePickerSView.m in Sources */,
 				DBDBF83320DCA6C90001B176 /* FBFiltrateModel.m in Sources */,
 				DBDBE8FD20D9EC350001B176 /* AppDelegate.m in Sources */,
 			);
