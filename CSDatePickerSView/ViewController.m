@@ -33,18 +33,16 @@
     [buttonSender setTintColor:[UIColor cyanColor]];
     [buttonSender addTarget:self action:@selector(nextVC:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonSender];
-    
-    
 }
 - (void)nextVC:(UIButton *)sender{
     [self.navigationController pushViewController:[SecondViewController new] animated:YES];
 }
 - (void)buttonChoose:(UIButton *)sender{
     CSDatePickerSView *pickerView = [[CSDatePickerSView alloc]initWithFrame:CGRectMake(0,self.view.frame.size.height,self.view.frame.size.width,260)];
-//    pickerView.datePickerViewDateRangeModel = CSDatePickerViewDateRangeModelCustom;
-//    pickerView.minYear = 1998;
-//    pickerView.maxYear = 2008;
-    pickerView.datePickerViewShowModel = CSDatePickerViewShowModelDefalut;
+    pickerView.datePickerViewDateRangeModel = CSDatePickerViewDateRangeModelCustom;
+    pickerView.minYear = 2007;
+    pickerView.maxYear = 3008;
+    pickerView.datePickerViewShowModel = CSDatePickerViewShowModelDefalutSecond;
     pickerView.delegate = self;
     [self.view addSubview:pickerView];
     [pickerView show];
